@@ -1,10 +1,10 @@
 import { ContactsList, Button } from './Contacts.styled';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const Contacts = ({ contacts, onClick, filterValue }) => {
-  console.log(contacts.filter(contact=> contact.name === 'Rosie Simpson'));
   const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filterValue.toLowerCase()));
+    contact.name.toLowerCase().includes(filterValue.toLowerCase())
+  );
 
   return (
     <div>
@@ -24,16 +24,16 @@ const Contacts = ({ contacts, onClick, filterValue }) => {
   );
 };
 
-// Contacts.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ),
-//   onClick: PropTypes.func,
-//   filter: PropTypes.string,
-// };
+Contacts.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+  onClick: PropTypes.func,
+  filter: PropTypes.string,
+};
 
 export default Contacts;
