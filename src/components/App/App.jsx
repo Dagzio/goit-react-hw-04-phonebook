@@ -17,33 +17,18 @@ const App = ()=> {
   const [filterValue, setFilterValue] = useState('');
 
   useEffect(()=>{
-    localStorage.setItem('contacts', JSON.stringify([...contacts]));
+    
     const savedContacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(savedContacts)
-    if (parsedContacts) {
-      setContacts({
-      contacts: [...savedContacts]
-    })
-    
+    if (savedContacts) {
+      setContacts(JSON.parse(savedContacts))
     };
+  }, [])
+
+  useEffect(()=>{
+    localStorage.setItem('contacts', JSON.stringify([...contacts]));
   }, [contacts])
- 
 
-  // useEffect(()=>{
-    
-  // },[])
-
-  // componentDidUpdate(prevProps, prevState) {
-
-
-
-  //   if (this.state.contacts !== prevState.contacts) {
-      
-  //   };
-
-  // };
-
-   const formSubmitHandler = (name, number) => {
+   const addContact = (name, number) => {
     const duplicateName = contacts.find(
       contact => contact.name === name
     );
@@ -51,33 +36,31 @@ const App = ()=> {
       alert(duplicateName.name+' is already in contacts');
       return;
     }
-    setContacts({
-      contacts: [...contacts, { id: nanoid(), name, number }],
-    });
+    setContacts((prev)=>[...prev, { id: nanoid(), name, number }])
   };
   
 
 
   const deleteContact = id => {
-    const filterId = contacts.filter(contact => contact.id !== id);
-    setContacts({ contacts: [...filterId] });
+    const filterValueId = contacts.filter(contact => contact.id !== id);
+    setContacts({ contacts: [...filterValueId] });
   };
 
   const onChangeFilter = event => {
     setFilterValue({
-      filter: event.currentTarget.value,
+      filterValue: event.currentTarget.value,
     });
   };
   
 
     return <Container>
       <Section title="Phonebook">
-        <ContactForm onSubmit={formSubmitHandler} />
+        <ContactForm onSubmit={addContact} />
       </Section>
 
       <Section title="Contacts">
         <Filter onChange={onChangeFilter } value={filterValue} />
-        <Contacts contacts={contacts} onClick={ deleteContact} filter={filterValue} />
+        <Contacts contacts={contacts} onClick={ deleteContact} filterValue={filterValue} />
       </Section>
       </Container>
     

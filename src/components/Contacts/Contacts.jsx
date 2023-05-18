@@ -1,10 +1,10 @@
 import { ContactsList, Button } from './Contacts.styled';
 // import PropTypes from 'prop-types';
 
-const Contacts = ({ contacts, onClick, filter }) => {
+const Contacts = ({ contacts, onClick, filterValue }) => {
+  console.log(contacts.filter(contact=> contact.name === 'Rosie Simpson'));
   const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+    contact.name.toLowerCase().includes(filterValue.toLowerCase()));
 
   return (
     <div>
