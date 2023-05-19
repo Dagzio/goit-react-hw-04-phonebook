@@ -23,10 +23,7 @@ const App = () => {
     localStorage.setItem('contactList', JSON.stringify([...contacts]));
   }, [contacts]);
 
-  const addContact = () => {
-    const {
-      contactInfo: { name, number },
-    } = ContactForm;
+  const addContact = (name, number) => {
     const duplicateName = contacts.find(contact => contact.name === name);
     if (duplicateName) {
       alert(duplicateName.name + ' is already in your contacts');
@@ -47,7 +44,7 @@ const App = () => {
   return (
     <Container>
       <Section title="Phonebook">
-        <ContactForm onSubmit={addContact} />
+        <ContactForm onFormSubmit={addContact} />
       </Section>
 
       <Section title="Contacts">
@@ -61,9 +58,4 @@ const App = () => {
     </Container>
   );
 };
-
 export default App;
-// { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-//     { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-//     { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-//     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' }

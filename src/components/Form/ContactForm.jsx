@@ -2,19 +2,22 @@ import { Formik } from 'formik';
 import { CurrentForm, Input, Button, Label } from './ContactForm.styled';
 import { useState } from 'react';
 
-const ContactForm = () => {
+const ContactForm = ({ onFormSubmit }) => {
   const [contactInfo, setContactInfo] = useState({
-    name: '',
-    number: '',
+    contactName: '',
+    contactNumber: '',
   });
 
-  const handleChange = ({ target: { name, value } }) => {
-    setContactInfo({ [name]: value });
+  const handleChange = e => {
+    setContactInfo({
+      ...contactInfo,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = () => {
     formReset();
-    // this.props.onSubmit(contactInfo.name, contactInfo.number);
+    onFormSubmit(contactInfo.contactName, contactInfo.contactNumber);
   };
 
   const formReset = () => {
@@ -33,7 +36,7 @@ const ContactForm = () => {
           name="contactName"
           id="name"
           onChange={handleChange}
-          value={contactInfo.name}
+          value={contactInfo.contactName}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
@@ -45,7 +48,7 @@ const ContactForm = () => {
           name="contactNumber"
           id="number"
           onChange={handleChange}
-          value={contactInfo.number}
+          value={contactInfo.contactNumber}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
